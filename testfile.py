@@ -12,7 +12,7 @@ chessField = [
 def printBoard():
     for row in chessField:
         print(''.join(row))
-def move(startPos:str,endPos:str,board:list[list])->list[list]:
+def move(startPos:str,endPos:str,board:list[list]):
     #Принимаем строки
     # получаем срезы
     startColStr = startPos[:1]
@@ -47,17 +47,24 @@ def move(startPos:str,endPos:str,board:list[list])->list[list]:
     ]
     # получаем какой фигурой ходим
     figure:str = board[startRowInt][startColInt]
-    return startMoveVector,endMoveVector,figure
+    return (startMoveVector,endMoveVector
+                ,figure)
 def movePawn(startPos:str,endPos:str,board:list[list]=chessField):
     startMoveVector,endMoveVector,figure = move(startPos,endPos,board)
     if (board[startMoveVector[0][0]][startMoveVector[1][0]] == 'p') and ((mt.subM(startMoveVector,endMoveVector) == [[-1],[0]]) or (mt.subM(startMoveVector,endMoveVector) == [[1],[0]])) :
         board[startMoveVector[0][0]][startMoveVector[1][0]] = '.'
-        board[startMoveVector[0][0]+1][startMoveVector[1][0]] = 'p'
+        board[endMoveVector[0][0]][endMoveVector[1][0]] = 'p'
         printBoard()
+        # print(mt.subM(startMoveVector,endMoveVector) == [[-1],[0]])
+        # print(mt.subM(startMoveVector,endMoveVector) == [[1],[0]])
     elif (board[startMoveVector[0][0]][startMoveVector[1][0]] == 'P') and ((mt.subM(startMoveVector,endMoveVector) == [[-1],[0]]) or (mt.subM(startMoveVector,endMoveVector) == [[1],[0]])) :
         board[startMoveVector[0][0]][startMoveVector[1][0]] = '.'
-        board[startMoveVector[0][0]-1][startMoveVector[1][0]] = 'P'
+        board[endMoveVector[0][0]][endMoveVector[1][0]] = 'P'
         printBoard()
+        # print(mt.subM(startMoveVector, endMoveVector) == [[-1], [0]])
+        # print(mt.subM(startMoveVector, endMoveVector) == [[1], [0]])
+    # elif (figure == 'p'):
+    #     return -1
 def moveRook(startPos:str,endPos:str,board:list[list]=chessField):
     # startMoveVector - sMV,endMoveVector - eMV
     sMV,eMV,figure = move(startPos,endPos,board)
@@ -66,8 +73,8 @@ def moveRook(startPos:str,endPos:str,board:list[list]=chessField):
         [8],
         [8]
     ]
-    # if (figure == "r"):
-    #     mt.print_mat(eMVM)
-    # else:
-    #     print("zxc")
+# while True:
+#     first = input()
+#     second = input()
+#     movePawn(first,second)
 
