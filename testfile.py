@@ -1,3 +1,5 @@
+from idlelib import history
+
 import matrix as mt
 chessField = [
             ['r','n','b','q','k','b','n','r'],
@@ -9,6 +11,7 @@ chessField = [
             ['P','P','P','P','P','P','P','P'],
             ['R','N','B','Q','K','B','N','R']
         ]
+his = []
 def printBoard():
     for row in chessField:
         print(''.join(row))
@@ -51,20 +54,38 @@ def move(startPos:str,endPos:str,board:list[list]):
                 ,figure)
 def movePawn(startPos:str,endPos:str,board:list[list]=chessField):
     startMoveVector,endMoveVector,figure = move(startPos,endPos,board)
-    if (board[startMoveVector[0][0]][startMoveVector[1][0]] == 'p') and ((mt.subM(startMoveVector,endMoveVector) == [[-1],[0]]) or (mt.subM(startMoveVector,endMoveVector) == [[1],[0]])) :
+    if (board[startMoveVector[0][0]][startMoveVector[1][0]] == 'p') and mt.subM(startMoveVector,endMoveVector) == [[-1],[0]]:
         board[startMoveVector[0][0]][startMoveVector[1][0]] = '.'
         board[endMoveVector[0][0]][endMoveVector[1][0]] = 'p'
         printBoard()
+        his.append(startPos)
+        his.append(endPos)
+        # print(his)
         # print(mt.subM(startMoveVector,endMoveVector) == [[-1],[0]])
         # print(mt.subM(startMoveVector,endMoveVector) == [[1],[0]])
-    elif (board[startMoveVector[0][0]][startMoveVector[1][0]] == 'P') and ((mt.subM(startMoveVector,endMoveVector) == [[-1],[0]]) or (mt.subM(startMoveVector,endMoveVector) == [[1],[0]])) :
+    elif (board[startMoveVector[0][0]][startMoveVector[1][0]] == 'P') and mt.subM(startMoveVector,endMoveVector) == [[1],[0]]:
         board[startMoveVector[0][0]][startMoveVector[1][0]] = '.'
         board[endMoveVector[0][0]][endMoveVector[1][0]] = 'P'
         printBoard()
+        his.append(startPos)
+        his.append(endPos)
         # print(mt.subM(startMoveVector, endMoveVector) == [[-1], [0]])
         # print(mt.subM(startMoveVector, endMoveVector) == [[1], [0]])
-    # elif (figure == 'p'):
-    #     return -1
+    elif (figure == 'p') and (board[endMoveVector[0][0]][endMoveVector[1][0]] == 'P','B','K','N','Q','R') and (mt.absMatrix(mt.subM(startMoveVector,endMoveVector)) == [[1],[1]]):
+        # print(figure)
+        # print((board[endMoveVector[0][0]][endMoveVector[1][0]] == 'P'))
+        # print(mt.absMatrix(mt.subM(startMoveVector, endMoveVector)) == [[1], [1]])
+        board[startMoveVector[0][0]][startMoveVector[1][0]] = '.'
+        board[endMoveVector[0][0]][endMoveVector[1][0]] = 'p'
+        printBoard()
+        his.append(startPos)
+        his.append(endPos)
+    elif (figure == 'P') and (board[endMoveVector[0][0]][endMoveVector[1][0]] == 'p','b','k','n','q','r') and (mt.absMatrix(mt.subM(startMoveVector,endMoveVector)) == [[1],[1]]):
+        board[startMoveVector[0][0]][startMoveVector[1][0]] = '.'
+        board[endMoveVector[0][0]][endMoveVector[1][0]] = 'P'
+        printBoard()
+        his.append(startPos)
+        his.append(endPos)
 def moveRook(startPos:str,endPos:str,board:list[list]=chessField):
     # startMoveVector - sMV,endMoveVector - eMV
     sMV,eMV,figure = move(startPos,endPos,board)
@@ -73,8 +94,11 @@ def moveRook(startPos:str,endPos:str,board:list[list]=chessField):
         [8],
         [8]
     ]
-# while True:
-#     first = input()
-#     second = input()
-#     movePawn(first,second)
-
+while True:
+    first = input()
+    if first == "exit":
+        break
+    if first == "history":
+        print(his)
+    second = input()
+    movePawn(first,second)
