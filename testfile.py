@@ -101,4 +101,8 @@ while True:
     if first == "history":
         print(his)
     second = input()
+    if second == "exit":
+        break
+    if second == "history":
+        print(his)
     movePawn(first,second)
