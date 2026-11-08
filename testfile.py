@@ -72,17 +72,18 @@ def movePawn(startPos:str,endPos:str,board:list[list]=chessField):
         his.append(histor)
         # print(mt.subM(startMoveVector, endMoveVector) == [[-1], [0]])
         # print(mt.subM(startMoveVector, endMoveVector) == [[1], [0]])
-    elif (figure == 'p') and (board[endMoveVector[0][0]][endMoveVector[1][0]] in ('P','B','K','N','Q','R')) and (mt.absMatrix(mt.subM(startMoveVector,endMoveVector)) == [[1],[1]]):
+    elif (figure == 'p') and (board[endMoveVector[0][0]][endMoveVector[1][0]] in ('P','B','K','N','Q','R')) and ((mt.subM(endMoveVector,startMoveVector) == [[1],[1]]) or (mt.subM(endMoveVector,startMoveVector) == [[1],[-1]])):
         # print(figure)
         # print((board[endMoveVector[0][0]][endMoveVector[1][0]] == 'P'))
         # print(mt.absMatrix(mt.subM(startMoveVector, endMoveVector)) == [[1], [1]])
-        print(board[endMoveVector[0][0]][endMoveVector[1][0]])
+        # print(board[endMoveVector[0][0]][endMoveVector[1][0]])
+        print(mt.subM(startMoveVector,endMoveVector))
         board[startMoveVector[0][0]][startMoveVector[1][0]] = '.'
         board[endMoveVector[0][0]][endMoveVector[1][0]] = 'p'
         printBoard()
         print("Взятие черной")
         his.append(histor)
-    elif (figure == 'P') and (board[endMoveVector[0][0]][endMoveVector[1][0]] in ('p','b','k','n','q','r')) and (mt.absMatrix(mt.subM(startMoveVector,endMoveVector)) == [[1],[1]]):
+    elif (figure == 'P') and (board[endMoveVector[0][0]][endMoveVector[1][0]] in ('p','b','k','n','q','r')) and ((mt.subM(endMoveVector,startMoveVector) == [[-1],[-1]]) or (mt.subM(endMoveVector,startMoveVector) == [[-1],[1]])):
         board[startMoveVector[0][0]][startMoveVector[1][0]] = '.'
         board[endMoveVector[0][0]][endMoveVector[1][0]] = 'P'
         printBoard()
